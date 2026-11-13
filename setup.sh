@@ -20,6 +20,8 @@ hf download HuggingFaceTB/SmolLM2-135M-Instruct
 hf download HuggingFaceTB/SmolLM2-1.7B-Instruct
 hf download meta-llama/Llama-3.2-1B-Instruct
 
+hf download sentence-transformers/all-MiniLM-L6-v2
+
 # list downloaded models
 hf cache ls
 hf cache ls --revisions
@@ -43,6 +45,6 @@ pip install torch==2.2.2
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 pip install huggingface_hub==0.36.2
-pip install "transformers==4.46.3" "trl==0.12.2" "peft==0.13.2" "accelerate==1.1.1" "datasets==3.1.0" "numpy==1.26.4" "pyarrow==15.0.2" "pandas==2.2.3"
+pip install "transformers==4.46.3" "numpy==1.26.4" "faiss-cpu==1.8.0.post1" "trl==0.12.2" "peft==0.13.2" "accelerate==1.1.1" "datasets==3.1.0" "pyarrow==15.0.2" "pandas==2.2.3"
 
 

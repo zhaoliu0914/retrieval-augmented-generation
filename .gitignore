@@ -1,1 +1,4 @@
 .venv
+rag_embeddings.npy
+rag_texts.json
+__pycache__
