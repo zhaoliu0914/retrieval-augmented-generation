@@ -9,6 +9,7 @@ Run:  python 02_build_index.py
 """
 
 import os
+
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
@@ -32,7 +33,7 @@ with open(KNOWLEDGE_FILE, "r", encoding="utf-8") as f:
 print(f"Loaded {len(texts)} documents. Embedding them...")
 
 # 2. Embed them all into vectors (one row per document).
-#embeddings = embed_texts(texts)
+# embeddings = embed_texts(texts)
 
 """
 Turn a list of strings into a numpy array of unit-length vectors.
@@ -45,7 +46,7 @@ model.eval()
 enc = tokenizer(texts, padding=True, truncation=True, max_length=256, return_tensors="pt")
 with torch.no_grad():
     out = model(**enc)
-#emb = _mean_pool(out.last_hidden_state, enc["attention_mask"])
+# emb = _mean_pool(out.last_hidden_state, enc["attention_mask"])
 
 """
 Average the token vectors into one vector per text.
@@ -55,7 +56,7 @@ mask = enc["attention_mask"].unsqueeze(-1).float()
 summed = (out.last_hidden_state * mask).sum(dim=1)
 counts = mask.sum(dim=1).clamp(min=1e-9)
 emb = summed / counts
-emb = torch.nn.functional.normalize(emb, p=2, dim=1)   # make each vector length 1
+emb = torch.nn.functional.normalize(emb, p=2, dim=1)  # make each vector length 1
 embeddings = emb.numpy().astype("float32")
 
 print(f"Each document is now a vector of length {embeddings.shape[1]}.")

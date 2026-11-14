@@ -8,6 +8,7 @@ whole mechanism is visible.
 """
 
 import os
+
 # Offline mode: use locally cached models, never phone home. Essential in China
 # without a VPN. Must be set BEFORE importing transformers.
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
@@ -49,13 +50,11 @@ def embed_texts(texts):
     Unit length means cosine similarity is just a dot product later.
     """
     _load_embedder()
-    enc = _tokenizer(
-        texts, padding=True, truncation=True, max_length=256, return_tensors="pt",
-    )
+    enc = _tokenizer(texts, padding=True, truncation=True, max_length=256, return_tensors="pt")
     with torch.no_grad():
         out = _model(**enc)
     emb = _mean_pool(out.last_hidden_state, enc["attention_mask"])
-    emb = torch.nn.functional.normalize(emb, p=2, dim=1)   # make each vector length 1
+    emb = torch.nn.functional.normalize(emb, p=2, dim=1)  # make each vector length 1
     return emb.numpy().astype("float32")
 
 
@@ -64,7 +63,7 @@ def retrieve(query, doc_embeddings, doc_texts, k=3):
     Embed the query, score it against every document by cosine similarity,
     and return the top-k (text, score) pairs, most relevant first.
     """
-    q = embed_texts([query])[0]            # shape: (384,)
-    scores = doc_embeddings @ q            # dot product == cosine (vectors are unit length)
-    top_idx = scores.argsort()[::-1][:k]   # indices of the highest scores
+    q = embed_texts([query])[0]  # shape: (384,)
+    scores = doc_embeddings @ q  # dot product == cosine (vectors are unit length)
+    top_idx = scores.argsort()[::-1][:k]  # indices of the highest scores
     return [(doc_texts[i], float(scores[i])) for i in top_idx]
