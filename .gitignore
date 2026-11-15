@@ -1,6 +1,8 @@
 .venv
 .vscode
 .idea
+.DS_Store
+*.DS_Store
 rag_embeddings.npy
 rag_texts.json
 __pycache__
