@@ -3,10 +3,13 @@ import os
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
+import json
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer
 
+KNOWLEDGE_FILE = "knowledge.jsonl"
 LLM_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
+EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 
 def tokenizer():
@@ -67,7 +70,29 @@ def tokenizer_model_chat():
     print(f"output_text = {answer_text}")
 
 
+def embed_model():
+    # 1. Load the documents.
+    texts = []
+    with open(KNOWLEDGE_FILE, mode="r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                texts.append(json.loads(line)["text"])
+    tokenizer = AutoTokenizer.from_pretrained(EMBED_MODEL)
+    model = AutoModel.from_pretrained(EMBED_MODEL)
+    model.eval()
+
+    encode = tokenizer(texts, padding=True, truncation=True, max_length=256, return_tensors="pt")
+    print(f"encode = {encode}")
+    print(f"encode text = {tokenizer.decode(encode['input_ids'][0])}")
+
+    output = model(**encode)
+    print(output)
+
+
+
 if __name__ == '__main__':
     # tokenizer()
     # tokenizer_model()
-    tokenizer_model_chat()
+    # tokenizer_model_chat()
+    embed_model()
