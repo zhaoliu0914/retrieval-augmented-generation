@@ -19,8 +19,14 @@ hf download google/gemma-3-270m-it
 hf download HuggingFaceTB/SmolLM2-135M-Instruct
 hf download HuggingFaceTB/SmolLM2-1.7B-Instruct
 hf download meta-llama/Llama-3.2-1B-Instruct
+hf download Qwen/Qwen2.5-1.5B-Instruct
+
+hf download Qwen/Qwen2.5-3B-Instruct
+hf download deepseek-ai/DeepSeek-R1-Distill-Qwen-14B
+
 
 hf download sentence-transformers/all-MiniLM-L6-v2
+hf download BAAI/bge-small-zh-v1.5
 
 # list downloaded models
 hf cache ls
