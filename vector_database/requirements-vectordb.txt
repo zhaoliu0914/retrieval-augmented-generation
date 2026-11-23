@@ -1,0 +1,18 @@
+# Vector-database kit. Builds on the RAG stack by adding FAISS, the standard
+# in-process vector-search library.
+#
+# EASIEST: reuse your RAG virtual environment and just add faiss-cpu:
+#     pip install faiss-cpu==1.8.0.post1
+#
+# If that wheel won't install on Big Sur (Intel Mac sometimes can't match the
+# macOS version FAISS targets), DON'T WORRY -- the kit auto-falls back to a
+# numpy backend with the same API, so everything still runs. You can run the
+# real FAISS later on your Windows/WSL2 box, where it installs cleanly.
+#
+# Full stack (if building a fresh env), install torch first:
+#     pip install torch==2.2.2
+#     pip install -r requirements-vectordb.txt
+transformers==4.46.3
+numpy==1.26.4
+huggingface_hub==0.36.2
+faiss-cpu==1.8.0.post1   # optional -- kit runs without it via a numpy fallback
