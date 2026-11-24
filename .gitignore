@@ -8,4 +8,7 @@ rag_texts.json
 __pycache__
 
 vector_database/nimbus_db
-law/data/*
+
+law_system/data/*
+law_system/law_embeddings.npy
+law_system/law_metadata.json

@@ -1,0 +1,13 @@
+# Chinese legal case-search demo. NO new packages needed beyond your fine-tuning
+# env (transformers handles both the bge embedder and Qwen2.5; numpy does retrieval).
+# No FAISS -> no segfault.
+#
+# Reuse your fine-tuning venv:
+#     cd ~/Projects/fine-tuning && source .venv/bin/activate
+#
+# Models to download once (both are on ModelScope -> no VPN needed in China):
+#   - BAAI/bge-small-zh-v1.5        (Chinese embedder, ~100 MB)
+#   - Qwen/Qwen2.5-1.5B-Instruct    (Chinese LLM, ~3 GB)
+transformers==4.46.3
+numpy==1.26.4
+huggingface_hub==0.36.2
